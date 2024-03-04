@@ -4,6 +4,7 @@
  */
 package project;
 
+import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
  */
 public class Home extends JFrame {
     JLabel name;
+    JLabel admin;
 
     public Home(){
         this(new Account());
@@ -21,7 +23,10 @@ public class Home extends JFrame {
         JFrame fr = new JFrame();
         String u_name = acc.GetName();
         name = new JLabel(u_name);
+        admin = new JLabel(String.valueOf(acc.GetAdmin()));
+        fr.setLayout(new FlowLayout());
         fr.add(name);
+        fr.add(admin);
         fr.setSize(300, 200);
         fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fr.setVisible(true);
