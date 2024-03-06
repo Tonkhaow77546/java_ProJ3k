@@ -38,11 +38,12 @@ public class Login extends JFrame {
                     boolean UserValid = (boolean) UserInfo[0];
                     String name = (String) UserInfo[1];
                     boolean isAdmin = (boolean) UserInfo[2];
+                    int id = (int) UserInfo[3];
                     
                     if (UserValid) {
                         JOptionPane.showMessageDialog(Login.this, "Login successful!");
                         dispose();
-                        Account acc = new Account(isAdmin, name);
+                        Account acc = new Account(isAdmin, name, id);
                         new Home(acc);
                     } else {
                         JOptionPane.showMessageDialog(Login.this, "Invalid username or password.");
@@ -77,7 +78,7 @@ public class Login extends JFrame {
     }
 
     private Object[] isValidUser(Connection conn, String username, String password) throws SQLException {
-        String sql = "SELECT name, admin FROM Users WHERE username = ? AND password = ?";
+        String sql = "SELECT name, admin, id FROM Users WHERE username = ? AND password = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
@@ -85,9 +86,10 @@ public class Login extends JFrame {
         if (rs.next()) {
             String name = rs.getString("name");
             boolean isAdmin = rs.getBoolean("admin");
+            int id = rs.getInt("id");
             rs.close();
             preparedStatement.close();
-            return new Object[]{true, name, isAdmin};
+            return new Object[]{true, name, isAdmin, id};
         } else {
             rs.close();
             preparedStatement.close();

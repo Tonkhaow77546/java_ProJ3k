@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 public class Home extends JFrame {
     JLabel name;
     JLabel admin;
+    JLabel id;
 
     public Home(){
         this(new Account());
@@ -24,9 +25,11 @@ public class Home extends JFrame {
         String u_name = acc.GetName();
         name = new JLabel(u_name);
         admin = new JLabel(String.valueOf(acc.GetAdmin()));
+        id = new JLabel(String.valueOf(acc.GetID()));
         fr.setLayout(new FlowLayout());
         fr.add(name);
         fr.add(admin);
+        fr.add(id);
         fr.setSize(300, 200);
         fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fr.setVisible(true);
