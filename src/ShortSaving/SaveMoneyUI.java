@@ -183,8 +183,6 @@ public class SaveMoneyUI implements ActionListener {
         return (long) ((Double.parseDouble(JAmount.getText())-Double.parseDouble(JBeginText.getText()))/daysBetween);
    }
     
-
-
     public JPanel getFrame() {
         return panelFrame;
     }
