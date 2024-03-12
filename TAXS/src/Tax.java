@@ -222,9 +222,6 @@ public class Tax implements ActionListener {
             double publicDonations = Double.parseDouble(tf16.getText());
             double donations = Double.parseDouble(tf17.getText());
 
-            
-            taxCalculator.no_Tax(inCome, bonuns, c1.getSelectedItem());
-
             if (child >= 0){
             exemption+= child*30000;
             }
@@ -399,24 +396,24 @@ public class Tax implements ActionListener {
             }
 
             //ลดหย่อน 2 เท่าของเงินที่จ่ายจริง แต่ไม่เกิน 10% ของเงินได้สุทธิ
-            if(publicDonations * 2 <= expenses * 10.0/100){
+            if(publicDonations * 2 <= exemption * (10.0/100)){
                 exemption += publicDonations * 2;
-            }else if(publicDonations * 2 > expenses * 10.0/100){
-                exemption += (expenses * 10.0/100);
+            }else if(publicDonations * 2 > exemption * (10.0/100)){
+                exemption += (exemption * (10.0/100));
             }
 
-            if(donations <= expenses * 10.0/100){
+            if(donations <= exemption * (10.0/100)){
                 exemption += donations;
-            }else if(donations > expenses * 10.0/100){
-                exemption += (expenses * 10.0/100);
+            }else if(donations > exemption * (10.0/100)){
+                exemption += (exemption * (10.0/100));
             }
 
             double taxableIncome = ((inCome*12) +bonuns+o_income) - expenses - (exemption + 60000);
-
+            taxCalculator.no_Tax(inCome, bonuns, c1.getSelectedItem(), taxableIncome);
             double tax = taxableIncome * (taxCalculator.TAX / 100.0);
 
             DecimalFormat df = new DecimalFormat("#0.00");
-            l5.setText("Tax Fee: " + df.format(tax));
+            l5.setText("Tax to be Paid: " + df.format(tax));
 
         } catch (NumberFormatException nfe) {
             throw new ArithmeticException("Please enter valid numbers.");

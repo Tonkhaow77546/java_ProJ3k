@@ -1,26 +1,28 @@
 public class CalculateTax extends Tax{
     protected double TAX;
 
-    public void no_Tax(double money, double bonuns, Object Status){
+    public void no_Tax(double money, double bonuns, Object Status, double Net_income){
       if (Status.equals("Spouse has income(filing separately)") || Status.equals("Spouse has no income")) {
             if (money <= 18333 && bonuns <= 10000){
                 TAX = 0.0;
             }else{
-                TAX = ladder_Tax(money, bonuns);
+                TAX = ladder_Tax(Net_income);
             }
         }else{
             if(money <= 10000 && bonuns <= 5000){
                 TAX = 0.0;
             }
             else{
-                TAX = ladder_Tax(money, bonuns);
+                TAX = ladder_Tax(Net_income);
             }
         }
     }
 
-    public double ladder_Tax(double money, double bonuns){
-        money *= 12 + bonuns;
-        if(money >= 1500001 && money <= 300000){
+    public double ladder_Tax(double money){
+        if(money <= 150000){
+            return 0;
+        }
+        else if(money >= 1500001 && money <= 300000){
             return 5;
         }else if(money >= 300001 && money <= 500000){
             return 10;
