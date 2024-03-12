@@ -6,9 +6,6 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 public class Login extends JFrame {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
-    static final String USER = "root";
-    static final String PASS = "";
 
     JLabel usernameLabel, passwordLabel;
     JTextField usernameField;
@@ -29,28 +26,22 @@ public class Login extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
+                String password = passwordField.getText();
 
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-                    Object[] UserInfo = isValidUser(conn, username, password);
-                    boolean UserValid = (boolean) UserInfo[0];
-                    String name = (String) UserInfo[1];
-                    boolean isAdmin = (boolean) UserInfo[2];
-                    int id = (int) UserInfo[3];
-                    
-                    if (UserValid) {
+                    Register register = new Register();
+                    register.createTable();
+                    Object[] UserInfo = register.Login(username, password);
+                    if (UserInfo[0].equals(true)){
                         JOptionPane.showMessageDialog(Login.this, "Login successful!");
                         dispose();
-                        Account acc = new Account(isAdmin, name, id);
+                        Account acc = new Account((boolean) UserInfo[2], (String) UserInfo[1], (int) UserInfo[3]);
                         new Home(acc);
                     } else {
                         JOptionPane.showMessageDialog(Login.this, "Invalid username or password.");
                     }
 
-                    conn.close();
-                } catch (ClassNotFoundException | SQLException ex) {
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(Login.this, "Error: " + ex.getMessage());
                 }
@@ -77,25 +68,25 @@ public class Login extends JFrame {
         setVisible(true);
     }
 
-    private Object[] isValidUser(Connection conn, String username, String password) throws SQLException {
-        String sql = "SELECT name, admin, id FROM Users WHERE username = ? AND password = ?";
-        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setString(1, username);
-        preparedStatement.setString(2, password);
-        ResultSet rs = preparedStatement.executeQuery();
-        if (rs.next()) {
-            String name = rs.getString("name");
-            boolean isAdmin = rs.getBoolean("admin");
-            int id = rs.getInt("id");
-            rs.close();
-            preparedStatement.close();
-            return new Object[]{true, name, isAdmin, id};
-        } else {
-            rs.close();
-            preparedStatement.close();
-            return new Object[]{false, null, null};
-        }
-    }
+//    private Object[] isValidUser(Connection conn, String username, String password) throws SQLException {
+//        String sql = "SELECT name, admin, id FROM Users WHERE username = ? AND password = ?";
+//        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+//        preparedStatement.setString(1, username);
+//        preparedStatement.setString(2, password);
+//        ResultSet rs = preparedStatement.executeQuery();
+//        if (rs.next()) {
+//            String name = rs.getString("name");
+//            boolean isAdmin = rs.getBoolean("admin");
+//            int id = rs.getInt("id");
+//            rs.close();
+//            preparedStatement.close();
+//            return new Object[]{true, name, isAdmin, id};
+//        } else {
+//            rs.close();
+//            preparedStatement.close();
+//            return new Object[]{false, null, null};
+//        }
+//    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
