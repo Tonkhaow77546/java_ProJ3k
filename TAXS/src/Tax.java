@@ -187,9 +187,9 @@ public class Tax implements ActionListener {
         mainPanel = new JPanel(new BorderLayout()); // Use BorderLayout to respect the size of the scroll pane.
         mainPanel.add(scroll, BorderLayout.CENTER); 
 
-        fr.add(mainPanel);
-        fr.setSize(1920, 1080);
-        fr.setVisible(true);
+        // fr.add(mainPanel);
+        // fr.setSize(1920, 1080);
+        // fr.setVisible(true);
     }
 
     
