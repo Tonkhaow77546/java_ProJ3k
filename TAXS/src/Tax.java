@@ -10,7 +10,7 @@ public class Tax implements ActionListener {
     private JLabel l1, l2, l3, l4, l5, nl1, nl2, nl3, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21;
     private JCheckBox ck1, ck2, ck3, ck4, ck5;
     private JComboBox<String> c1;
-    private JPanel p1;
+    private JPanel mainPanel;
 
     public Tax() {
 
@@ -175,29 +175,27 @@ public class Tax implements ActionListener {
         p1.add(bn);
         p1.add(l5);
 
+        mainPanel = new JPanel();
+        mainPanel.add(p1);
+
         bn.addActionListener(this);
 
         JScrollPane scroll = new JScrollPane(p1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        fr.add(scroll, BorderLayout.EAST);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
         scroll.setVisible(true);
         
-        fr.getContentPane().add(scroll, BorderLayout.CENTER);
-        // Removed fr.add(p1);
+        mainPanel = new JPanel(new BorderLayout()); // Use BorderLayout to respect the size of the scroll pane.
+        mainPanel.add(scroll, BorderLayout.CENTER); 
+
+        fr.add(mainPanel);
         fr.setSize(1920, 1080);
         fr.setVisible(true);
     }
 
-    public JPanel getFrame(){
-        return p1;
-    }
+    
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        calcuTax();
-        
-    }
-
-    protected void calcuTax() {
         CalculateTax taxCalculator = new CalculateTax();
         try {
             //เเปลงเป็น double
@@ -413,13 +411,17 @@ public class Tax implements ActionListener {
             double tax = taxableIncome * (taxCalculator.TAX / 100.0);
 
             DecimalFormat df = new DecimalFormat("#0.00");
-            l5.setText("Tax to be Paid: " + df.format(tax));
+            l5.setText("Tax to be Paid(Year): " + df.format(tax));
 
         } catch (NumberFormatException nfe) {
             throw new ArithmeticException("Please enter valid numbers.");
         }
+        
     }
-
+    
+    public JPanel getFrame(){
+        return mainPanel;
+    }
     public static void main(String[] args) {
         new Tax();
     }
