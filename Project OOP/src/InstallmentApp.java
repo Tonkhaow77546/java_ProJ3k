@@ -22,11 +22,11 @@ public class InstallmentApp extends JFrame implements ActionListener {
     private JTextField paidInstallmentsField;
 
     public InstallmentApp() {
-        setTitle("Installment Calculator");
-        setSize(1920, 1080);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setLocationRelativeTo(null);
+        //setTitle("Installment Calculator");
+        //setSize(1920, 1080);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setLayout(new BorderLayout());
+        //setLocationRelativeTo(null);
         
         frame = new JFrame("Product Installment");
         frame.setSize(1920, 1080);
@@ -44,8 +44,8 @@ public class InstallmentApp extends JFrame implements ActionListener {
         originalField = new JTextField();
         installmentField = new JTextField();
         interestField = new JTextField();
-        daysLeftField = new JTextField();
-        installmentDueField = new JTextField();
+        daysLeftField = new JTextField("0");
+        installmentDueField = new JTextField("0");
         paidInstallmentsField = new JTextField("0");
 
         inputPanel.add(new JLabel("Original Price:"));
@@ -97,13 +97,7 @@ public class InstallmentApp extends JFrame implements ActionListener {
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Payment Details");
         titledBorder.setTitleJustification(TitledBorder.CENTER);
         resultPanel.setBorder(titledBorder);
-        
         resultPanel.setBackground(Color.WHITE);
-
-        resultPanel.add(paymentPerInstallmentLabel);
-        resultPanel.add(remainingInstallmentsLabel);
-        resultPanel.add(nextDaysLabel);
-        resultPanel.add(everyDaysLabel);
         
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(buttonPanel, BorderLayout.NORTH);
@@ -121,8 +115,8 @@ public class InstallmentApp extends JFrame implements ActionListener {
         return label;
     }
     
-    public JFrame getFrame() {
-        return frame;
+    public JPanel getPanel() {
+        return (JPanel)frame.getContentPane();
     }
     
     public void actionPerformed(ActionEvent e) {
@@ -217,8 +211,10 @@ public class InstallmentApp extends JFrame implements ActionListener {
 
 
     public static void main(String[] args) {
-        InstallmentApp app = new InstallmentApp();
-        JFrame frame = app.getFrame();
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            InstallmentApp app = new InstallmentApp();
+            app.frame.setVisible(true);
+        });
     }
+    
 }
