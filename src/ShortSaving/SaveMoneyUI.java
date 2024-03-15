@@ -174,6 +174,7 @@ public class SaveMoneyUI implements ActionListener {
     }
     
     public long Calculate(Calendar startDate, Calendar endDate) {
+        //credit https://fwebsolution.blogspot.com/2012/04/java-carlendar.html?m=1
         Calendar date = (Calendar) startDate.clone();
         long daysBetween = 0;
         while (date.before(endDate)) {
