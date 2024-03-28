@@ -1,9 +1,11 @@
 import java.sql.*;
 
 public abstract class SQLUser{
+    private String SQLUserName;
+    private String SQLPassword;
+    
     private String DBAdress;
     private String DBTable;
-    
     
     protected Connection connection;
     protected ResultSet resultSet;
@@ -16,11 +18,32 @@ public abstract class SQLUser{
         connect();
     }
     
+    public SQLUser(String DBAdress, String DBTable, String userName, String password){
+        this.DBAdress = DBAdress;
+        this.DBTable = DBTable;
+        this.SQLUserName = userName;
+        this.SQLPassword = password;
+        
+        connectWithAccount();
+    }
+    
     public final void connect(){
         try{
             System.out.println("START CONNECTING.");
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://"+DBAdress);
+            System.out.println("DATABASE CONNECTED.");
+        }catch(ClassNotFoundException| SQLException e){
+            System.out.println("CONNECTION FAILED.");
+            System.out.println(e);
+        }
+    }
+    
+    public final void connectWithAccount(){
+        try{
+            System.out.println("START CONNECTING.");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://"+DBAdress, SQLUserName, SQLPassword);
             System.out.println("DATABASE CONNECTED.");
         }catch(ClassNotFoundException| SQLException e){
             System.out.println("CONNECTION FAILED.");
@@ -61,5 +84,16 @@ public abstract class SQLUser{
         return DBTable;
     }public void setDBTable(String DBTable){
         this.DBTable = DBTable;
+    }
+    
+    public String getUserName(){
+        return SQLUserName;
+    }public String getPassword(){
+        return SQLPassword;
+    }public void setNamePassword(String userName, String password){
+        this.SQLUserName = userName;
+        this.SQLPassword = password;
+        disconnect();
+        connectWithAccount();
     }
 }
