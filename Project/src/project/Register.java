@@ -25,11 +25,14 @@ public class Register extends DBconnect {
             String name = rs.getString("name");
             boolean isAdmin = rs.getBoolean("admin");
             int id = rs.getInt("id");
+            AccountDetail accd = new AccountDetail(isAdmin, name, id);
+            Account<AccountDetail> acc = new Account<>();
+            acc.setAccount(accd);
             super.setID(id);
             rs.close();
             preparedStatement.close();
             super.disconnect();
-            return new Object[]{true, name, isAdmin, id};
+            return new Object[]{true, acc.getAccount()};
         } else {
             rs.close();
             preparedStatement.close();

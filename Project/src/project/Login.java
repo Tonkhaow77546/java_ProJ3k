@@ -35,8 +35,7 @@ public class Login extends JFrame {
                     if (UserInfo[0].equals(true)){
                         JOptionPane.showMessageDialog(Login.this, "Login successful!");
                         dispose();
-                        Account acc = new Account((boolean) UserInfo[2], (String) UserInfo[1], (int) UserInfo[3]);
-                        new Home(acc);
+                        new Home((AccountDetail)UserInfo[1]);
                     } else {
                         JOptionPane.showMessageDialog(Login.this, "Invalid username or password.");
                     }

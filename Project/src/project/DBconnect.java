@@ -4,7 +4,7 @@ package project;
 
 import java.sql.*;
 public class DBconnect implements FunctionDB{
-    private final String url = "jdbc:mysql://localhost:3306/testdb";
+    private final String url = "jdbc:mysql://localhost:3306/mydb";
     private final String user = "root";
     private final String pass = "";
     protected Connection connect;

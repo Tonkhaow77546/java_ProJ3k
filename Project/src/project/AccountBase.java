@@ -8,13 +8,8 @@ package project;
  *
  * @author Pattr
  */
-public class Account<T extends AccountBase & Accessible> {
-    private T account;
-    public void setAccount(T account){
-        this.account = account;
-    }
-    public T getAccount(){
-        account.report();
-        return account;
-    }
+public abstract class AccountBase {
+    abstract boolean GetAdmin();
+    abstract String GetName();
+    abstract int GetId();
 }

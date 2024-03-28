@@ -18,14 +18,14 @@ public class Home extends JFrame {
     JLabel id;
 
     public Home(){
-        this(new Account());
+        this(new AccountDetail());
     }
-    public Home(Account acc) {
+    public Home(AccountDetail acc) {
         JFrame fr = new JFrame();
         String u_name = acc.GetName();
         name = new JLabel(u_name);
         admin = new JLabel(String.valueOf(acc.GetAdmin()));
-        id = new JLabel(String.valueOf(acc.GetID()));
+        id = new JLabel(String.valueOf(acc.GetId()));
         fr.setLayout(new FlowLayout());
         fr.add(name);
         fr.add(admin);
