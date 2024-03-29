@@ -1,23 +1,24 @@
-public class CalculateTax extends Tax{
+public class CalculateTax extends Tax implements Tax_Percentage{
     protected double TAX;
 
     public void no_Tax(double money, double bonuns, Object Status, double Net_income){
-      if (Status.equals("Spouse has income(filing separately)") || Status.equals("Spouse has no income")) {
-            if (money <= 18333 && bonuns <= 10000){
-                TAX = 0.0;
-            }else{
-                TAX = ladder_Tax(Net_income);
-            }
+    if (Status.equals("Spouse has income(filing separately)") || Status.equals("Spouse has no income")) {
+        if (money <= 18333 && bonuns <= 10000){
+            TAX = 0.0;
         }else{
-            if(money <= 10000 && bonuns <= 5000){
-                TAX = 0.0;
-            }
-            else{
-                TAX = ladder_Tax(Net_income);
-            }
+            TAX = ladder_Tax(Net_income);
+        }
+    }else{
+        if(money <= 10000 && bonuns <= 5000){
+            TAX = 0.0;
+        }
+        else{
+            TAX = ladder_Tax(Net_income);
+        }
         }
     }
-
+    
+    @Override
     public double ladder_Tax(double money){
         if(money <= 150000){
             return 0;

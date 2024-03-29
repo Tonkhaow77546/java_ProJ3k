@@ -91,7 +91,6 @@ public class Tax implements ActionListener {
         p3.add(ck3);
         p3.add(ck4);
 
-
         //เเก้ Font
         l1.setFont(labelFont);
         l2.setFont(labelFont);
@@ -187,9 +186,9 @@ public class Tax implements ActionListener {
         mainPanel = new JPanel(new BorderLayout()); // Use BorderLayout to respect the size of the scroll pane.
         mainPanel.add(scroll, BorderLayout.CENTER); 
 
-        // fr.add(mainPanel);
-        // fr.setSize(1920, 1080);
-        // fr.setVisible(true);
+        fr.add(mainPanel);
+        fr.setSize(1920, 1080);
+        fr.setVisible(true);
     }
 
     
@@ -197,28 +196,84 @@ public class Tax implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         CalculateTax taxCalculator = new CalculateTax();
+        double bonuns = 0;
+        double o_income = 0;
+        double expenses = 0;
+        double exemption = 0;
+        int child = 0;
+        double socialSecurityFund = 0;
+        double paidHouse = 0;
+        double lifePaid = 0;
+        double healPaid = 0;
+        double healPaidFM = 0;
+        double pensionPaid = 0;
+        double GPF = 0;
+        double NSF = 0;
+        double PTWF = 0;
+        double RMF = 0;
+        double SSF = 0;
+        double TESG = 0;
+        double publicDonations = 0;
+        double donations = 0;
+
         try {
             //เเปลงเป็น double
             double inCome = Double.parseDouble(tf1.getText());
-            double bonuns = Double.parseDouble(tnf1.getText());
-            double o_income = Double.parseDouble(tnf2.getText());
-            double expenses = Double.parseDouble(tf2.getText());
-            double exemption = 0;
-            int child = Integer.parseInt(tf4.getText());
-            double socialSecurityFund = Double.parseDouble(tf3.getText());
-            double paidHouse = Double.parseDouble(tf5.getText());
-            double lifePaid = Double.parseDouble(tf6.getText());
-            double healPaid = Double.parseDouble(tf7.getText());
-            double healPaidFM = Double.parseDouble(tf8.getText());
-            double pensionPaid = Double.parseDouble(tf9.getText());
-            double GPF = Double.parseDouble(tf10.getText());
-            double NSF = Double.parseDouble(tf11.getText());
-            double PTWF = Double.parseDouble(tf12.getText());
-            double RMF = Double.parseDouble(tf13.getText());
-            double SSF = Double.parseDouble(tf14.getText());
-            double TESG = Double.parseDouble(tf15.getText());
-            double publicDonations = Double.parseDouble(tf16.getText());
-            double donations = Double.parseDouble(tf17.getText());
+            System.out.println(inCome);
+            if(!tnf1.getText().isEmpty()){
+                bonuns = Double.parseDouble(tnf1.getText());
+            }
+            if(!tnf2.getText().isEmpty()){
+                o_income = Double.parseDouble(tnf2.getText());
+            }
+            if (!tf2.getText().isEmpty()) {
+                expenses = Double.parseDouble(tf2.getText());
+            }
+            if (!tf4.getText().isEmpty()) {
+                child = Integer.parseInt(tf4.getText());
+            }
+            if (!tf3.getText().isEmpty()) {
+                socialSecurityFund = Double.parseDouble(tf3.getText());
+            }
+            if (!tf5.getText().isEmpty()) {
+                paidHouse = Double.parseDouble(tf5.getText());
+            }
+            if (!tf6.getText().isEmpty()) {
+                lifePaid = Double.parseDouble(tf6.getText());
+            }
+            if (!tf7.getText().isEmpty()) {
+                healPaid = Double.parseDouble(tf7.getText());
+            }
+            if (!tf8.getText().isEmpty()) {
+                healPaidFM = Double.parseDouble(tf8.getText());
+            }
+            if (!tf9.getText().isEmpty()) {
+                pensionPaid = Double.parseDouble(tf9.getText());
+            }
+            if (!tf10.getText().isEmpty()) {
+                GPF = Double.parseDouble(tf10.getText());
+            }
+            if (!tf11.getText().isEmpty()) {
+                NSF = Double.parseDouble(tf11.getText());
+            }
+            if (!tf12.getText().isEmpty()) {
+                PTWF = Double.parseDouble(tf12.getText());
+            }
+            if (!tf13.getText().isEmpty()) {
+                RMF = Double.parseDouble(tf13.getText());
+            }
+            if (!tf14.getText().isEmpty()) {
+                SSF = Double.parseDouble(tf14.getText());
+            }
+            if (!tf15.getText().isEmpty()) {
+                TESG = Double.parseDouble(tf15.getText());
+            }
+            if (!tf16.getText().isEmpty()) {
+                publicDonations = Double.parseDouble(tf16.getText());
+            }
+            if (!tf17.getText().isEmpty()) {
+                donations = Double.parseDouble(tf17.getText());
+            }
 
             if (child >= 0){
             exemption+= child*30000;
@@ -406,6 +461,7 @@ public class Tax implements ActionListener {
                 exemption += (exemption * (10.0/100));
             }
 
+            
             double taxableIncome = ((inCome*12) +bonuns+o_income) - expenses - (exemption + 60000);
             taxCalculator.no_Tax(inCome, bonuns, c1.getSelectedItem(), taxableIncome);
             double tax = taxableIncome * (taxCalculator.TAX / 100.0);
@@ -418,7 +474,6 @@ public class Tax implements ActionListener {
         }
         
     }
-    
     public JPanel getFrame(){
         return mainPanel;
     }
