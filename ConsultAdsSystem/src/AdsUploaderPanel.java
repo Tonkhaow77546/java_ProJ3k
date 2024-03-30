@@ -11,13 +11,10 @@ public class AdsUploaderPanel extends JPanel implements ActionListener{
     
     private final JPanel infoPanel = new JPanel();
     private final JPanel idPanel = new JPanel();
-    private final JPanel namePanel = new JPanel();
     private final JPanel linkPanel = new JPanel();
     private final JLabel idLabel = new JLabel("Ads id:");
-    private final JLabel nameLabel = new JLabel("Name:");
     private final JLabel linkLabel = new JLabel("Link:");
     private final JTextField adsId = new JTextField();
-    private final JTextField adsName = new JTextField();
     private final JTextField hyperLink = new JTextField();
     
     private final JPanel buttonPanel = new JPanel();
@@ -33,16 +30,12 @@ public class AdsUploaderPanel extends JPanel implements ActionListener{
         this.add(infoPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         
-        infoPanel.setLayout(new GridLayout(3, 1));
+        infoPanel.setLayout(new GridLayout(2, 1));
         infoPanel.add(idPanel);
-        infoPanel.add(namePanel);
         infoPanel.add(linkPanel);
         idPanel.setLayout(new BorderLayout());
         idPanel.add(idLabel, BorderLayout.WEST);
         idPanel.add(adsId, BorderLayout.CENTER);
-        namePanel.setLayout(new BorderLayout());
-        namePanel.add(nameLabel, BorderLayout.WEST);
-        namePanel.add(adsName, BorderLayout.CENTER);
         linkPanel.setLayout(new BorderLayout());
         linkPanel.add(linkLabel, BorderLayout.WEST);
         linkPanel.add(hyperLink, BorderLayout.CENTER);
@@ -65,7 +58,6 @@ public class AdsUploaderPanel extends JPanel implements ActionListener{
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION){
                     selectedFile = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                    adsName.setText(selectedFile.getName());
                 }
             }else if(ae.getSource().equals(upload)){
                 try{
@@ -74,7 +66,6 @@ public class AdsUploaderPanel extends JPanel implements ActionListener{
                     System.out.println(e);
                 }finally{
                     adsId.setText("");
-                    adsName.setText("");
                     hyperLink.setText("");
                     selectedFile = null;
                 }
