@@ -1,19 +1,19 @@
 import javax.swing.*;
 
 public class AdsImageIcon extends ImageIcon{
-    private String fileName;
+    private String name;
     private String hyperLink;
     
-    public AdsImageIcon(String fileName, String hyperLink, byte[] imageBytes){
+    public AdsImageIcon(String name, String hyperLink, byte[] imageBytes){
         super(imageBytes);
-        this.fileName = fileName;
+        this.name = name;
         this.hyperLink = hyperLink;
     }
     
     public String getFileName(){
-        return fileName;
+        return name;
     }public void setFileName(String fileName){
-        this.fileName = fileName;
+        this.name = fileName;
     }
     public String getHyperLink(){
         return hyperLink;

@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.*;
+import javax.swing.text.JTextComponent;
 
 public class ChatUser extends SQLConnector{
     private String chatUserName;
@@ -28,8 +29,6 @@ public class ChatUser extends SQLConnector{
                 resultSet.next();
                 System.out.println("CREATING SUCCESFULLY");
             }
-            threadHelper = new ThreadHelper(this);
-            workingThread = new Thread(threadHelper);
         }catch(SQLException e){
             System.out.println("CHAT USER CREATE FAILED.");
             System.out.println(e);
@@ -54,13 +53,19 @@ public class ChatUser extends SQLConnector{
         try{
             resultSet.refreshRow();
             localChatData = resultSet.getString("chat_history");
-            System.out.println("LOCAL CHAT UPDATED.");
+            //System.out.println("LOCAL CHAT UPDATED.");
         }catch(SQLException e){
             System.out.println("FAILED TO UPDATE LOCAL CHAT.");
             System.out.println(e);
         }
     }
     public void autoUpdateLocalChat(){
+        threadHelper = new ThreadHelper(this);
+        workingThread = new Thread(threadHelper);
+        workingThread.start();
+    }public void autoUpdateLocalChat(JTextComponent jtext){
+        threadHelper = new ThreadHelper(this, jtext);
+        workingThread = new Thread(threadHelper);
         workingThread.start();
     }public void stopAutoUpdateLocalChatData(){
         workingThread.interrupt();
@@ -76,8 +81,13 @@ public class ChatUser extends SQLConnector{
 }
 class ThreadHelper implements Runnable{
     private final ChatUser user;
+    private JTextComponent jtext;
     public ThreadHelper(ChatUser user){
         this.user = user;
+    }
+    public ThreadHelper(ChatUser user, JTextComponent jtext){
+        this(user);
+        this.jtext = jtext;
     }
     @Override
     public void run(){
@@ -85,6 +95,9 @@ class ThreadHelper implements Runnable{
             while(true){
                 user.updateLocalChatData();
                 Thread.sleep(600);
+                if (jtext != null){
+                    jtext.setText(user.getRawLocalChatData());
+                }
             }
         }catch(InterruptedException e){
             System.out.println("THREAD INTERRUPTED.");

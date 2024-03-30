@@ -13,14 +13,13 @@ public class AdsDownloader extends SQLConnector{
         super(adress, DBName, DBTable, SQLUserName, SQLPassword);
     }
     
-    public ArrayList<AdsImageIcon> dowloadAds(int[] adsIDs){
+    public ArrayList<AdsImageIcon> dowloadAds(){
         try{
             ArrayList<AdsImageIcon> adsArrayList = new ArrayList();
-            for (int eachID : adsIDs){
-                executeStatement("select * from "+getDBTable()+" where ads_id="+eachID);
-                if (!resultSet.next()) continue;
-                try (InputStream inputStream = resultSet.getBinaryStream("image")) {
-                    AdsImageIcon adsImage = new AdsImageIcon(resultSet.getString("file_name"), resultSet.getString("hyperlink"),inputStream.readAllBytes());
+            executeStatement("select * from "+getDBTable());
+            while(resultSet.next()){
+                try (InputStream inputStream = resultSet.getBinaryStream("visual")) {
+                    AdsImageIcon adsImage = new AdsImageIcon(resultSet.getString("name"), resultSet.getString("hyperlink"),inputStream.readAllBytes());
                     adsArrayList.add(adsImage);
                 }
             }

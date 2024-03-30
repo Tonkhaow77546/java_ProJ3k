@@ -12,7 +12,10 @@ public class AdsUploader extends SQLConnector{
     public AdsUploader(String adress, String DBName, String DBTable, String SQLUserName, String SQLPassword){
         super(adress, DBName, DBTable, SQLUserName, SQLPassword);
         if (!this.isTableReady()){
-            this.createTable("(ads_id INTEGER NOT NULL, file_name VARCHAR(255) DEFAULT NULL, hyperlink VARCHAR(255) DEFAULT NULL, visual MEDIUMBLOB, PRIMARY KEY ( ads_id ))");
+            this.createTable("(ads_id INTEGER NOT NULL,"
+                    + " name VARCHAR(255) DEFAULT NULL,"
+                    + " hyperlink VARCHAR(255) DEFAULT NULL,"
+                    + " visual MEDIUMBLOB, PRIMARY KEY ( ads_id ))");
         }
     }
     
@@ -29,9 +32,9 @@ public class AdsUploader extends SQLConnector{
                 resultSet.next();
                 System.out.println("CREATING SUCCESFULLY");
             }
-            resultSet.updateString("file_name", file.getName());
+            resultSet.updateString("name", file.getName());
             resultSet.updateString("hyperlink", hyperLink);
-            resultSet.updateBlob("image", inputStream);
+            resultSet.updateBlob("visual", inputStream);
             resultSet.updateRow();
         }catch(IOException | SQLException e){
             System.out.println("ADS UPDATE FAILED.");
