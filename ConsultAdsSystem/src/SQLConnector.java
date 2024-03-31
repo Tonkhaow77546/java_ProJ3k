@@ -1,3 +1,5 @@
+
+
 import java.sql.*;
 
 public abstract class SQLConnector{
@@ -51,7 +53,7 @@ public abstract class SQLConnector{
             redirectDBAdress();
             
             System.out.println("Searching desired DBTable...");
-            ResultSet tableSet = connection.getMetaData().getTables(null, null, DBTable, null);
+            ResultSet tableSet = connection.getMetaData().getTables(DBName, null, DBTable, null);
             if (tableSet.next()){
                 System.out.println("Found your DBTable!!!");
                 tableReady = true;

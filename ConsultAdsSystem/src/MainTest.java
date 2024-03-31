@@ -1,3 +1,5 @@
+
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,8 +8,7 @@ public class MainTest{
         ChatJPanel chat = new ChatJPanel("localhost", "chat_test", "history", "admin", "1234", 1, "aom");
         ChatJPanel chat2 = new ChatJPanel("localhost", "chat_test", "history", "admin", "1234", 1, "handsome_aom");
         AdsUploaderPanel adsup = new AdsUploaderPanel("localhost", "ads_test", "ads_storage", "admin", "1234");
-        int[] perfferedId = {1};
-        AdsDownloaderPanel adspanel = new AdsDownloaderPanel("localhost", "ads_test", "ads_storage", "admin", "1234", perfferedId);
+        AdsDownloaderPanel adspanel = new AdsDownloaderPanel("localhost", "ads_test", "ads_storage", "admin", "1234");
         
         JFrame frame = new JFrame("test");
         

@@ -1,3 +1,5 @@
+
+
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
@@ -10,15 +12,15 @@ public class AdsImageIcon extends ImageIcon{
     
     public AdsImageIcon(String name, String hyperLink, byte[] imageBytes){
         super();
-        this.setImage(imgByteToImage(imageBytes));
+        this.setImage(AdsImageIcon.imgByteToImage(imageBytes));
         this.name = name;
         this.hyperLink = hyperLink;
     }
     
-    private Image imgByteToImage(byte[] imageBytes){
+    public static Image imgByteToImage(byte[] imageBytes){
         try{
             BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
-            return img.getScaledInstance(200, 400, Image.SCALE_SMOOTH);
+            return img.getScaledInstance(800, 800, Image.SCALE_SMOOTH);
         }catch(IOException e){
             return null;
         }

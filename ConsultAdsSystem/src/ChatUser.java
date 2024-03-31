@@ -1,3 +1,5 @@
+
+
 import java.sql.*;
 import java.util.*;
 import javax.swing.text.JTextComponent;
@@ -13,9 +15,12 @@ public class ChatUser extends SQLConnector{
             int roomId, String chatUserName){
         super(adress, DBName, DBTable, SQLUserName, SQLPassword);
         this.chatUserName = chatUserName;
+        System.out.println(this.isTableReady());
         
         if (!this.isTableReady()){
             this.createTable("(room_id INTEGER NOT NULL, chat_history LONGTEXT DEFAULT NULL, PRIMARY KEY ( room_id ))");
+        }else{
+            System.out.println("######Table ready");
         }
         
         executeStatement("SELECT * FROM "+getDBTable()+" WHERE room_id="+roomId);

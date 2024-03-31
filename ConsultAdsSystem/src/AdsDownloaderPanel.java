@@ -1,3 +1,5 @@
+
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,7 +9,6 @@ import java.net.*;
 
 public class AdsDownloaderPanel extends JPanel implements MouseListener{
     private AdsDownloader downloader;
-    private int[] perferredAdsId;
     
     private ArrayList<AdsImageIcon> imageIconArray;
     private ArrayList<JLabel> adsLabelArray = new ArrayList();
@@ -16,9 +17,7 @@ public class AdsDownloaderPanel extends JPanel implements MouseListener{
     
     private Thread workingThread;
     
-    public AdsDownloaderPanel(String adress, String DBName, String DBTable, String SQLUserName, String SQLPassword,
-            int[] perferredAdsId){
-        this.perferredAdsId = perferredAdsId;
+    public AdsDownloaderPanel(String adress, String DBName, String DBTable, String SQLUserName, String SQLPassword){
         downloader = new AdsDownloader(adress, DBName, DBTable, SQLUserName, SQLPassword);
         this.setLayout(cd);
         adsLabelArray.removeAll(adsLabelArray);
@@ -27,6 +26,7 @@ public class AdsDownloaderPanel extends JPanel implements MouseListener{
             for (AdsImageIcon adsImage : imageIconArray){
                 JLabel adsLabel = new JLabel(adsImage);
                 adsLabel.addMouseListener(this);
+                adsLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 adsLabelArray.add(adsLabel);
             }
         }
